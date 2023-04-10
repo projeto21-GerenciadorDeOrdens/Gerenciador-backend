@@ -1,0 +1,20 @@
+async function postOrder(ids: object, body: object) {
+  const post = await prisma.orders.create({
+    data: {
+      userId: ids.userId,
+      senderId: ids.userId,
+      recipientId: ids.recipientId,
+      driverId: ids.driverId,
+      freight: body.frete,
+      weight: body.peso,
+      toll: body.pedagio,
+      taxes: body.imposto,
+      advance: body.adiantamento,
+      gas: body.abastecimento,
+      cte: body.cte,
+      cteValue: body.valorcte,
+      notes: body.observacao,
+    },
+  });
+  return post
+}
