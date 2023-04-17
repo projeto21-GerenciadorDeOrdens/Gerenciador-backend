@@ -12,20 +12,20 @@ async function getOrders(): Promise<any[]> {
   return response;
 }
 
-async function postOrder(userId: number, body: any){
+async function postOrder(userId: number, body: any) {
   const senderVerify = await orderRelatedRepository.retrieveSenderByName(body.remetente.nome);
   if (!senderVerify) {
-    throw requestError(404, "Remetente não encontrado no banco de dados");
+    throw notFoundError();
   }
 
   const recipientVerify = await orderRelatedRepository.retrieveRecipientByName(body.destinatario.nome);
   if (!recipientVerify) {
-    throw requestError(404, "Destinatário não encontrado no banco de dados");
+    throw notFoundError();
   }
 
   const driverVerify1 = await orderRelatedRepository.retrieveDriverByName(body.motorista.nome);
   if (!driverVerify1) {
-    throw requestError(404, "Motorista não encontrado no banco de dados");
+    throw notFoundError();
   }
 
   const driverVerify2 = await ordersRepository.retrieveOrdersByDriver(driverVerify1.id);
@@ -90,6 +90,7 @@ async function setOrderAsPaid(orderId: number) {
 }
 
 async function removeOrder(orderId: number) {
+  console.log(orderId, "orderId");
   const verifyOrder = await ordersRepository.retrieveOrderByOrderId(orderId);
   if (!verifyOrder) {
     throw notFoundError();

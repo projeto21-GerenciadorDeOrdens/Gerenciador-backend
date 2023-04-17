@@ -2,11 +2,9 @@ import { prisma } from "@/config";
 import { Prisma } from "@prisma/client";
 
 async function retrieveSenderByName(name: string) {
-  const nome = name.toUpperCase();
-  console.log(nome);
   return await prisma.senders.findFirst({
     where: {
-      name: nome,
+      name,
     },
   });
 }
@@ -16,10 +14,9 @@ async function retrieveSenders() {
 }
 
 async function retrieveRecipientByName(name: string) {
-  const nome = name.replace("%", " ").toUpperCase();
   return await prisma.recipients.findFirst({
     where: {
-      name: nome,
+      name,
     },
   });
 }

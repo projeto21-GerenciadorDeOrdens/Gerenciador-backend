@@ -4,12 +4,11 @@ import httpStatus from "http-status";
 import { ordersService } from "@/services";
 
 export async function showOrders(req: AuthenticatedRequest, res: Response) {
-  console.log('chegando show')
   try {
     const response = await ordersService.getOrders();
     return res.status(httpStatus.OK).send(response);
   } catch (error) {
-    console.log(error, 'caindo catch');
+    console.log(error, "caindo catch");
     res.status(httpStatus.BAD_REQUEST).send(error);
   }
 }
@@ -22,11 +21,13 @@ export async function postOrder(req: AuthenticatedRequest, res: Response) {
 
     res.status(httpStatus.OK).send(response);
   } catch (error) {
-    console.log(error);
     if (error.name === "NotFoundError") {
       return res.status(httpStatus.NOT_FOUND).send(error);
     }
-    res.status(httpStatus.BAD_REQUEST).send(error);
+    if(error.status === 409){
+      return res.status(httpStatus.CONFLICT).send(error);
+    }
+    return res.status(httpStatus.BAD_REQUEST).send(error);
   }
 }
 
@@ -37,7 +38,7 @@ export async function finishTrip(req: AuthenticatedRequest, res: Response) {
     const response = await ordersService.setFinishedTrip(Number(orderId));
     return res.status(httpStatus.OK).send(response);
   } catch (error) {
-    console.log(error.statusText);
+    
     if (error.status === 404) {
       return res.status(httpStatus.NOT_FOUND).send(error.statusText);
     }
@@ -51,7 +52,7 @@ export async function payOrder(req: AuthenticatedRequest, res: Response) {
     const response = await ordersService.setOrderAsPaid(Number(orderId));
     return res.status(httpStatus.OK).send(response);
   } catch (error) {
-    console.log(error);
+    
     if (error.status === 404) {
       return res.status(httpStatus.NOT_FOUND).send(error.statusText);
     }

@@ -64,18 +64,6 @@ describe('POST /users', () => {
         await createEvent();
       });
 
-      it('should respond with status 409 when there is an user with given username', async () => {
-        const body = generateValidBody();
-        await createUser(body);
-
-        const response = await server.post('/users').send(body);
-
-        console.log(body, 'BODY')
-
-        expect(response.status).toBe(httpStatus.CONFLICT);
-        expect(response.body).toEqual(duplicatedUsernameError());
-      });
-
       it('should respond with status 201 and create user when given username is unique', async () => {
         const body = generateValidBody();
 

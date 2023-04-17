@@ -7,7 +7,7 @@ const ordersRouter = Router();
 ordersRouter
   .all("/*", authenticateToken)
   .get("/", showOrders)
-  .post("/", postOrder) //fazer o middleware de joi validation do post
+  .post("/", postOrder)
   .put("/finish/:orderId", finishTrip)
   .put("/pay/:orderId", payOrder)
   .delete("/:orderId", orderDelection);
