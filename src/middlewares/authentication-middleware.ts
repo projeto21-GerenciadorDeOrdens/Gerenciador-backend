@@ -9,7 +9,7 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
   const authHeader = req.header('Authorization');
 
   if (!authHeader){
-    console.log('caindo aqui1')
+    console.log('caindo aqui 1')
   }
 
   if (!authHeader) return generateUnauthorizedResponse(res);
@@ -17,7 +17,7 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
   const token = authHeader.split(' ')[1];
 
   if (!token){
-    console.log('caindo aqui2')
+    console.log('caindo aqui 2')
   }
 
   if (!token) return generateUnauthorizedResponse(res);
@@ -32,7 +32,7 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
     });
 
     if (!session){
-      console.log('caindo aqui3')
+      console.log('caindo aqui 3')
     }
 
     if (!session) return generateUnauthorizedResponse(res);

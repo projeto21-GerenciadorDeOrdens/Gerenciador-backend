@@ -60,25 +60,31 @@ model Drivers {
   Orders Orders[]
 }
 
+model PaidOrders {
+  id      Int @id @default(autoincrement())
+  orderId Int @unique
+}
+
 model Orders {
-  id          Int        @id @default(autoincrement())
-  userId      Int
-  senderId    Int
-  recipientId Int
-  driverId    Int
-  freight     String
-  weight      String
-  toll        String
-  taxes       String
-  advance     String
-  gas         String
-  cte         String
-  cteValue    String
-  notes       String
-  isPaid      Boolean
-  createdAt   DateTime   @default(now())
-  User        User       @relation(fields: [userId], references: [id])
-  Sender      Senders    @relation(fields: [senderId], references: [id])
-  Recipient   Recipients @relation(fields: [recipientId], references: [id])
-  Driver      Drivers    @relation(fields: [driverId], references: [id])
+  id                    Int        @id @default(autoincrement())
+  userId                Int
+  senderId              Int
+  recipientId           Int
+  driverId              Int
+  freight               String
+  weight                String
+  toll                  String
+  taxes                 String
+  advance               String
+  gas                   String
+  cte                   String     @unique
+  cteValue              String
+  notes                 String
+  isPaid                Boolean
+  driverFinishedService Boolean
+  createdAt             DateTime   @default(now())
+  User                  User       @relation(fields: [userId], references: [id])
+  Sender                Senders    @relation(fields: [senderId], references: [id])
+  Recipient             Recipients @relation(fields: [recipientId], references: [id])
+  Driver                Drivers    @relation(fields: [driverId], references: [id])
 }

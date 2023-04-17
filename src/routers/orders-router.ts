@@ -1,12 +1,15 @@
 import { Router } from "express";
 import { authenticateToken } from "@/middlewares";
-import { showOrders, postOrder } from "@/controllers/orders-controller";
+import { showOrders, postOrder, finishTrip, payOrder, orderDelection } from "@/controllers/orders-controller";
 
 const ordersRouter = Router();
 
 ordersRouter
-    .all("/*", authenticateToken)
-    .get("/", showOrders)
-    .post("/", postOrder)
+  .all("/*", authenticateToken)
+  .get("/", showOrders)
+  .post("/", postOrder) //fazer o middleware de joi validation do post
+  .put("/finish/:orderId", finishTrip)
+  .put("/pay/:orderId", payOrder)
+  .delete("/:orderId", orderDelection);
 
-export {ordersRouter}
+export { ordersRouter };
